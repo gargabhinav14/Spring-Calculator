@@ -5,6 +5,7 @@
  */
 package spring.calculator;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +25,16 @@ public class CalculatorController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @HystrixCommand(fallbackMethod = "getFallbackCalc")
     @GetMapping(value = "/{calculationString}")
     public String calculate(@PathVariable String calculationString) throws Exception {
 
         return doCalculation(calculationString);
 
+    }
+    
+    public String getFallbackCalc(@PathVariable String calculationString) throws Exception {
+        return "Service Down";
     }
 
     private String doCalculation(String calculationString) throws Exception {

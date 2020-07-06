@@ -20,22 +20,18 @@ public class Calculate {
         this.restTemplate = template;
     }
 
-    @HystrixCommand
     String divide(String[] numbers) {
         return restTemplate.getForObject("http://divider-service/divide/" + numbers[0] + "-" + numbers[1], String.class);
     }
 
-    @HystrixCommand
     String multiply(String[] numbers) {
         return restTemplate.getForObject("http://multiplicator-service/multiply/" + numbers[0] + "-" + numbers[1], String.class);
     }
 
-    @HystrixCommand
     String add(String[] numbers) {
         return restTemplate.getForObject("http://adder-service/add/" + numbers[0] + "-" + numbers[1], String.class);
     }
 
-    @HystrixCommand
     String subtract(String[] numbers) {
         return restTemplate.getForObject("http://subtractor-service/subtract/" + numbers[0] + "-" + numbers[1], String.class);
     }
